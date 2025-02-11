@@ -1,0 +1,15 @@
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.AssemblyInfoInputs.cache
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.AssemblyInfo.cs
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.csproj.CoreCompileInputs.cache
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.sourcelink.json
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\bin\Debug\net9.0\lab-4-big-to-do-StrawmanDave.exe
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\bin\Debug\net9.0\lab-4-big-to-do-StrawmanDave.deps.json
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\bin\Debug\net9.0\lab-4-big-to-do-StrawmanDave.runtimeconfig.json
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\bin\Debug\net9.0\lab-4-big-to-do-StrawmanDave.dll
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\bin\Debug\net9.0\lab-4-big-to-do-StrawmanDave.pdb
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.dll
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\refint\lab-4-big-to-do-StrawmanDave.dll
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.pdb
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\lab-4-big-to-do-StrawmanDave.genruntimeconfig.cache
+C:\Users\HumbleIcarus\Documents\Programming 1410-1415\Programming-1410\lab-4-big-to-do-StrawmanDave\obj\Debug\net9.0\ref\lab-4-big-to-do-StrawmanDave.dll
