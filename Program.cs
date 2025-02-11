@@ -173,30 +173,12 @@ public class TodoList
     public void SwapWithPrevious()
     {
         ///should swap the current task with the previouse task using its index
-        ///The new varibles that hold the current and previous task are needed for not duplicating tasks
-        /*
-        Task current = GetTask(_selectIndex);
-        Task previous = GetTask(previousIndex());
-        _tasks[_selectIndex] = previous;
-        _tasks[previousIndex()] = current;
-        */
-        ///uses the same logic as swapTaskAt
-        ///should just use swapTaskAt
         ///uses WrapperIndex So you can not try and swap someting outside the bounds of the list
         SwapTasksAt(_selectIndex,WrapperIndex(previousIndex()));
     }
     public void SwapWithNext()
     {
         ///should swap the current task with the next task using its index
-        ///The new varibles that hold the current and previous task are needed for not duplicating tasks
-        /*
-        Task current = GetTask(_selectIndex);
-        Task previous = GetTask(previousIndex());
-        _tasks[_selectIndex] = previous;
-        _tasks[previousIndex()] = current;
-        */
-        ///uses the same logic as swapTaskAT
-        ///should just use swapTaskAt
         ///uses WrapperIndex so you can not try and swap something outside the bounds of the list
         SwapTasksAt(_selectIndex,WrapperIndex(NextIndex()));
     }
@@ -339,31 +321,37 @@ public class Task
         Do.Insert("jump");
         Do.Insert("sleep");
         Do.Insert("swim");
-        for(int i = 0; i<Do.Length(); i++)
-        {
-            Console.WriteLine(Do.GetTask(i).Title());
-        }
 
-        Console.WriteLine();
-
-        Do.SwapTasksAt(2,0);
-        for(int i = 0; i<Do.Length(); i++)
-        {
-            Console.WriteLine(Do.GetTask(i).Title());
-        }
-        Console.WriteLine();
         //using 4 because that is how many items I put in using the insert command.
         Debug.Assert(Do.Length() == 4);
-        Do.Insert("fly");
 
-        for(int i = 0; i<Do.Length(); i++)
-        {
-            Console.WriteLine(Do.GetTask(i).Title());
-        }
+        ///tests if the WrapperIndex is working properly
+        Debug.Assert(Do.WrapperIndex(5) == 0);
 
+        //starting off with the first index of the list
+        Debug.Assert(Do.CurrentTask().Title() == "swim");//is swim because its the last in so its the first out
+        Debug.Assert(Do.GetTask(Do.WrapperIndex(Do.NextIndex())).Title() == "sleep");// is sleep because it is the next in
+        Debug.Assert(Do.GetTask(Do.WrapperIndex(Do.previousIndex())).Title()== "help");// is help because it is the last in
+        //if you where to write out all the Items in the list Do in with a for loop it would start with swim and then go down to help
 
+        //lets swap jump with swim
+        Do.SwapTasksAt(0,2); // swim should be index 0 and jump should be index 2 counting up
+        //The current task title should now be jump because we swapped them
+        Debug.Assert(Do.CurrentTask().Title()== "jump");
+        //now lets switch jump with next item withs should be sleep
+        Do.SwapWithNext();
+        //the current task title should now be sleep
+        Debug.Assert(Do.CurrentTask().Title() == "sleep");
+        //now lets swap the previous item
+        Do.SwapWithPrevious();
+        //current task title should now be help because it wrapperindex retuns the last item in the list
+        Debug.Assert(Do.CurrentTask().Title() == "help");
+        //lets change the name of this task with update selected task method;
+        Do.UpdateSelectedTitle("newTask");
+        //The title of the current task should now be newTask
+        Debug.Assert(Do.CurrentTask().Title()== "newTask");
+
+        
         new TodoListApp(new TodoList()).Run();
-        ///When running this you can go one past the index of the list
-        ///Why is that? how do I make it loop back so it never goes out of the index
     }
   }
