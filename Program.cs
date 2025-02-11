@@ -40,7 +40,7 @@ class TodoListApp
         if (task == _tasks.CurrentTask()) arrow = "->";
         string check = " ";
         if (task.Status() == Task.CompletionStatus.Finished) check = "X";
-        return $"{arrow} [{check}] {task.Title}";
+        return $"{arrow} [{check}] {task.Title()}";
     }
 
     public void DisplayTasks() {
@@ -99,14 +99,14 @@ class TodoListApp
                     _insertMode = true;
                     break;
                 case ConsoleKey.E:
-                    _tasks.CurrentTask.Title = GetTitle();
+                    _tasks.CurrentTask().SetTitle(GetTitle());
                     break;
                 case ConsoleKey.H:
                     _showHelp = !_showHelp;
                     break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    _tasks.CurrentTask.ToggleStatus();
+                    _tasks.CurrentTask().ToggleStatus();
                     break;
                 case ConsoleKey.Delete:
                 case ConsoleKey.Backspace:
@@ -170,15 +170,46 @@ public class TodoList
         int getIndex = _selectIndex +1;
         return getIndex;
     }
+    public void SwapWithPrevious()
+    {
+        ///should swap the current task with the previouse task using its index
+        ///The new varibles that hold the current and previous task are needed for not duplicating tasks
+        /*
+        Task current = GetTask(_selectIndex);
+        Task previous = GetTask(previousIndex());
+        _tasks[_selectIndex] = previous;
+        _tasks[previousIndex()] = current;
+        */
+        ///uses the same logic as swapTaskAt
+        ///should just use swapTaskAt
+        ///uses WrapperIndex So you can not try and swap someting outside the bounds of the list
+        SwapTasksAt(_selectIndex,WrapperIndex(previousIndex()));
+    }
+    public void SwapWithNext()
+    {
+        ///should swap the current task with the next task using its index
+        ///The new varibles that hold the current and previous task are needed for not duplicating tasks
+        /*
+        Task current = GetTask(_selectIndex);
+        Task previous = GetTask(previousIndex());
+        _tasks[_selectIndex] = previous;
+        _tasks[previousIndex()] = current;
+        */
+        ///uses the same logic as swapTaskAT
+        ///should just use swapTaskAt
+        ///uses WrapperIndex so you can not try and swap something outside the bounds of the list
+        SwapTasksAt(_selectIndex,WrapperIndex(NextIndex()));
+    }
     public void SelectPrevious()
     {
-        //gets the previouse task by index
-        GetTask(previousIndex());
+        ///It should move the selected Index to the next task
+        _selectIndex = WrapperIndex(previousIndex());
+
     }
     public void SelectNext()
     {
-        ///gets the next task by index
-        GetTask(NextIndex());
+        ///it also should move the selected Index to that task
+        _selectIndex = WrapperIndex(NextIndex());
     }
     public void Insert(string title)
     {
@@ -302,7 +333,7 @@ public class Task
         Debug.Assert(job.Status() == Task.CompletionStatus.NotDone);
         job.ToggleStatus();
         Debug.Assert(job.Status()== Task.CompletionStatus.Finished);
-/*
+        
         TodoList Do = new TodoList();
         Do.Insert("help");
         Do.Insert("jump");
@@ -330,7 +361,9 @@ public class Task
             Console.WriteLine(Do.GetTask(i).Title());
         }
 
-*/
+
         new TodoListApp(new TodoList()).Run();
+        ///When running this you can go one past the index of the list
+        ///Why is that? how do I make it loop back so it never goes out of the index
     }
   }
