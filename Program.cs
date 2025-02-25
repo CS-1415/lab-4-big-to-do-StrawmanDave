@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Dynamic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
 class TodoListApp 
@@ -127,12 +128,21 @@ public class TodoList
     public void SwapTasksAt(int i, int j)
     {
         //gets the task by the number in the list
-        //then it needs set to a Task varible so it is easier to swap 
-        Task one = GetTask(i);
-        Task two = GetTask(j);
+        //then it needs set to a Task varible so it is easier to swap
+        
         //the task of where i is from the index in the list gets swapped with the j and vise versa.
-        _tasks[i]= two;
-        _tasks[j] = one;
+        try
+        {
+            Task one = GetTask(i);
+            Task two = GetTask(j);
+
+            _tasks[i]= two;
+            _tasks[j] = one;
+        }catch(ArgumentOutOfRangeException)
+        {
+            Console.WriteLine("No task to swap with");
+        }
+
     }
     public int WrapperIndex(int index)
     {
@@ -142,14 +152,17 @@ public class TodoList
         ///There is more how much is the index out of bounds each way?
         ///We need to find that out and return the index that corresponds to that correct spot.
         ///For this project you will only be stepping by 1 so the given code should work
-        if(index < _tasks.IndexOf(_tasks[0]))///if index is less than the first index of the list
+        if(Length() > 1)
         {
-            return _tasks.IndexOf(_tasks.Last());///retun the last index of the list
-        }
+            if(index < _tasks.IndexOf(_tasks[0]))///if index is less than the first index of the list
+            {
+                return _tasks.IndexOf(_tasks.Last());///retun the last index of the list
+            }
 
-        if(index > _tasks.IndexOf(_tasks.Last()))/// if the index is greater than the last index of the array
-        {
-            return _tasks.IndexOf(_tasks[0]);///return the first index of the list
+            if(index > _tasks.IndexOf(_tasks.Last()))/// if the index is greater than the last index of the array
+            {
+                return _tasks.IndexOf(_tasks[0]);///return the first index of the list
+            }
         }
         /// if none of the cases are true it should just retun index
         return index;
@@ -174,24 +187,44 @@ public class TodoList
     {
         ///should swap the current task with the previouse task using its index
         ///uses WrapperIndex So you can not try and swap someting outside the bounds of the list
-        SwapTasksAt(_selectIndex,WrapperIndex(previousIndex()));
+        try
+        {
+            SwapTasksAt(_selectIndex,WrapperIndex(previousIndex()));
+        }catch(ArgumentOutOfRangeException)
+        {
+            Console.WriteLine("No task to swap with");
+        }
+        
     }
     public void SwapWithNext()
     {
         ///should swap the current task with the next task using its index
         ///uses WrapperIndex so you can not try and swap something outside the bounds of the list
-        SwapTasksAt(_selectIndex,WrapperIndex(NextIndex()));
+        try
+        {
+            SwapTasksAt(_selectIndex,WrapperIndex(NextIndex()));
+        }catch(ArgumentOutOfRangeException)
+        {
+            Console.WriteLine("No task to swap with");
+        }
+        
     }
     public void SelectPrevious()
     {
         ///It should move the selected Index to the next task
-        _selectIndex = WrapperIndex(previousIndex());
+        if(Length() > 1)
+        {
+            _selectIndex = WrapperIndex(previousIndex());
+        }
 
     }
     public void SelectNext()
     {
         ///it also should move the selected Index to that task
-        _selectIndex = WrapperIndex(NextIndex());
+        if(Length() > 1)
+        {
+            _selectIndex = WrapperIndex(NextIndex());
+        }
     }
     public void Insert(string title)
     {
@@ -223,12 +256,26 @@ public class TodoList
     public void DeleteSelected()
     {
         ///removes the selected task in _tasks with the _selectedIndex
-        _tasks.Remove(_tasks[_selectIndex]);
+        
+        WrapperIndex(_selectIndex);
+        try
+        {
+            _tasks.Remove(_tasks[_selectIndex]);
+        
+        }catch(IndexOutOfRangeException)
+        {
+            Console.WriteLine("No task/index selected");
+        }catch(ArgumentOutOfRangeException)
+        {
+            Console.WriteLine("No task/Argument selected");
+        }
+        
+        
     }
     public Task CurrentTask()
     {
         ///gets the task corresponding to the _selectedIndex and returns that task
-
+        WrapperIndex(_selectIndex);
         Task current = GetTask(_selectIndex);
         return current;
     }
@@ -239,22 +286,25 @@ public class TodoList
         ///If you give a index that is out of the bounds of the list then you it should return a unkown task
         ///The Def default task is just there so the method can run.
         Task Def = new Task("Default");
-
-        for(int i = 0; i<_tasks.Count(); i++)
+        try
         {
-            if(i == index)
+            for(int i = 0; i<_tasks.Count(); i++)
             {
-                return _tasks[i];
+                if(i == index)
+                {
+                    return _tasks[i];
+                }
             }
-        }
-
-        if(index < Length() || index > Length())
+            return _tasks[WrapperIndex(_selectIndex)];
+        }catch(IndexOutOfRangeException)
         {
-            Console.WriteLine("Cannont get task Index was out of bounds");
-            Task unkown = new Task("unkown");
-            return unkown;
+            Console.WriteLine("No task to switch with");
+            if(_selectIndex > Length())
+            {
+                return _tasks.Last();
+            }
+            return _tasks[0];
         }
-        return Def;
     }
 }
 
@@ -338,7 +388,7 @@ public class Task
         Do.SwapTasksAt(0,2); // swim should be index 0 and jump should be index 2 counting up
         //The current task title should now be jump because we swapped them
         Debug.Assert(Do.CurrentTask().Title()== "jump");
-        //now lets switch jump with next item withs should be sleep
+        //now lets switch jump with next item witch should be sleep
         Do.SwapWithNext();
         //the current task title should now be sleep
         Debug.Assert(Do.CurrentTask().Title() == "sleep");
@@ -349,9 +399,9 @@ public class Task
         //lets change the name of this task with update selected task method;
         Do.UpdateSelectedTitle("newTask");
         //The title of the current task should now be newTask
-        Debug.Assert(Do.CurrentTask().Title()== "newTask");
+        Debug.Assert(Do.CurrentTask().Title() == "newTask");
 
-        
+
         new TodoListApp(new TodoList()).Run();
     }
   }
